@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skylanche - Sua Rede Social</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-mode">
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <h1 class="logo">Skylanche</h1>
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Pesquisar">
+            </div>
+        </div>
+        <nav class="header-middle">
+            <a href="#" class="active"><i class="fas fa-home"></i></a>
+            <a href="#"><i class="fas fa-user-friends"></i></a>
+            <a href="#"><i class="fas fa-video"></i></a>
+            <a href="#"><i class="fas fa-store"></i></a>
+        </nav>
+        <div class="header-right">
+            <div class="user-menu">
+                <i class="fas fa-plus"></i>
+                <i class="fas fa-comment"></i>
+                <i class="fas fa-bell"></i>
+                <!-- IMAGEM DO PERFIL -->
+                <div class="profile-pic-mini settings-btn user-profile-avatar" style="background-image: url('default-profile.svg'); background-size: cover; background-position: center;"></div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Barra Lateral Esquerda -->
+        <aside class="left-sidebar">
+            <div class="sidebar-item">
+                <!-- IMAGEM DO PERFIL -->
+                <div class="profile-pic-mini user-profile-avatar" style="background-image: url('default-profile.svg'); background-size: cover; background-position: center;"></div>
+                <span>Seu Perfil</span>
+            </div>
+            <div class="sidebar-item"><i class="fas fa-user-friends"></i><span>Amigos</span></div>
+            <div class="sidebar-item"><i class="fas fa-history"></i><span>Lembranças</span></div>
+            <div class="sidebar-item"><i class="fas fa-bookmark"></i><span>Salvos</span></div>
+            <div class="sidebar-item"><i class="fas fa-users"></i><span>Grupos</span></div>
+        </aside>
+
+        <!-- Feed Central -->
+        <section class="feed">
+            <!-- Stories Section -->
+            <div class="stories-container">
+                <button class="story-add" id="addStoryBtn">
+                    <i class="fas fa-plus"></i>
+                    <span>Seu Story</span>
+                </button>
+                <div id="storiesCarousel" class="stories-carousel"></div>
+            </div>
+
+            <!-- Criar Post -->
+            <div class="create-post">
+                <div class="post-top">
+                    <!-- IMAGEM DO PERFIL -->
+                    <div class="profile-pic-mini user-profile-avatar" style="background-image: url('default-profile.svg'); background-size: cover; background-position: center;"></div>
+                    <input type="text" id="postInput" placeholder="No que você está pensando?">
+                    <button class="photo-btn" onclick="document.getElementById('postFileInput' ).click()" title="Adicionar foto">
+                        +
+                    </button>
+                </div>
+                <div id="postImagePreview" class="post-image-preview" style="display: none;">
+                    <img id="previewPostImg" src="" alt="Preview">
+                    <button class="remove-image-btn" onclick="removePostImage()"><i class="fas fa-times"></i></button>
+                </div>
+                <hr>
+                <div class="post-actions">
+                    <button id="cancelPostBtn" class="btn-secondary">Cancelar</button>
+                    <button id="submitPostBtn" class="btn-primary">Postar</button>
+                </div>
+            </div>
+
+            <input type="file" id="postFileInput" accept="image/*" style="display: none;">
+
+            <!-- Container de Posts -->
+            <div id="post-container"></div>
+        </section>
+
+        <!-- Barra Lateral Direita -->
+        <aside class="right-sidebar">
+            <div class="sidebar-section">
+                <h4>Contatos Online</h4>
+                <div class="contact-item chat-contact" data-persona="joao">
+                    <div class="profile-pic-mini" style="background-image: url('joao.jpg'); background-size: cover; background-position: center;"></div>
+                    <div class="contact-info">
+                        <span>João Silva</span>
+                        <small>Online • responde rápido</small>
+                    </div>
+                </div>
+                <div class="contact-item chat-contact" data-persona="maria">
+                    <div class="profile-pic-mini" style="background-image: url('maria.jpg'); background-size: cover; background-position: center;"></div>
+                    <div class="contact-info">
+                        <span>Maria Oliveira</span>
+                        <small>Disponível agora</small>
+                    </div>
+                </div>
+                <div class="contact-item chat-contact" data-persona="carlos">
+                    <div class="profile-pic-mini" style="background-image: url('carlos.jpg'); background-size: cover; background-position: center;"></div>
+                    <div class="contact-info">
+                        <span>Carlos Santos</span>
+                        <small>Em reunião</small>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content settings-modal">
+            <div class="modal-header">
+                <h2>Configurações</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="settings-section">
+                    <h4>Perfil</h4>
+                    <div class="profile-info">
+                        <!-- IMAGEM DO PERFIL -->
+                        <div id="profilePreviewImage" class="profile-pic-mini user-profile-avatar" style="width: 48px; height: 48px; background-image: url('default-profile.svg'); background-size: cover; background-position: center;"></div>
+                        <div>
+                            <p class="profile-name">Você</p>
+                            <p class="profile-date">Membro desde 2026</p>
+                            <div class="name-edit-row">
+                                <input type="text" id="nameInput" class="name-edit-input" value="Você" placeholder="Seu nome">
+                                <button id="saveNameBtn" class="btn-primary small-btn">Salvar</button>
+                            </div>
+                            <button id="changeProfilePhotoBtn" class="btn-secondary small-btn">Alterar foto</button>
+                            <input type="file" id="profilePhotoInput" accept="image/*" style="display: none;">
+                        </div>
+                    </div>
+                </div>
+                <div class="settings-section">
+                    <h4>Tema</h4>
+                    <button id="themeToggleBtn" class="theme-toggle">
+                        <i class="fas fa-moon"></i>
+                        <span>Modo Escuro</span>
+                    </button>
+                </div>
+                <button id="logoutBtn" class="btn-logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Sair</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comment Modal -->
+    <div id="commentModal" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content comment-modal">
+            <div class="modal-header">
+                <h2>Comentários</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="postPreview" class="post-preview"></div>
+                <div id="commentsList" class="comments-list"></div>
+                <div class="comment-input-area">
+                    <input type="text" id="commentInput" placeholder="Escreva um comentário...">
+                    <button id="submitCommentBtn" class="btn-primary">Enviar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Story Creator Modal -->
+    <div id="storyCreatorModal" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content story-creator-modal">
+            <div class="modal-header">
+                <h2>Criar Story</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="storyImagePreview" class="story-image-preview hidden">
+                    <img id="previewImg" src="" alt="Story preview">
+                </div>
+                <div id="storyUploadArea" class="story-upload-area">
+                    <i class="fas fa-image"></i>
+                    <p>Clique para adicionar uma foto</p>
+                    <p class="small">ou arraste uma imagem aqui</p>
+                </div>
+                <input type="file" id="storyFileInput" accept="image/*" style="display: none;">
+                <div id="storyActions" class="story-actions hidden">
+                    <button id="changeImageBtn" class="btn-secondary">Trocar Imagem</button>
+                    <button id="postStoryBtn" class="btn-primary">Postar Story</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Story Viewer Modal -->
+    <div id="storyViewerModal" class="modal hidden fullscreen">
+        <div class="story-viewer">
+            <div class="story-progress-bar">
+                <div id="storyProgress" class="progress-fill"></div>
+            </div>
+            <div class="story-header">
+                <div class="story-author-info">
+                    <!-- IMAGEM DO PERFIL DO STORY: Será preenchida dinamicamente -->
+                    <div class="profile-pic-mini" id="storyAuthorAvatar"></div>
+                    <div>
+                        <p id="storyAuthorName">Autor</p>
+                        <p class="story-time">Há alguns minutos</p>
+                    </div>
+                </div>
+                <button id="closeStoryBtn" class="close-btn">&times;</button>
+            </div>
+            <div class="story-content">
+                <img id="storyImage" src="" alt="Story" style="display: none;">
+                <div id="storyPlaceholder" class="story-placeholder">
+                    <div class="placeholder-avatar"><i class="fas fa-user"></i></div>
+                    <p id="storyPlaceholderName">Autor</p>
+                </div>
+            </div>
+            <button id="prevStoryBtn" class="story-nav-btn prev"><i class="fas fa-chevron-left"></i></button>
+            <button id="nextStoryBtn" class="story-nav-btn next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <div class="ai-chat-widget" id="aiChatWidget">
+        <button class="ai-chat-toggle" id="aiChatToggle" title="Abrir mensagens">
+            <i class="fas fa-comments"></i>
+            <span>Mensagens</span>
+        </button>
+
+        <div class="ai-chat-panel" id="aiChatPanel">
+            <div class="ai-chat-header">
+                <div>
+                    <h4>Mensagens</h4>
+                    <p>Conversas recentes</p>
+                </div>
+                <button class="ai-chat-close" id="aiChatClose" title="Fechar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="chat-contacts">
+                <button class="chat-contact-chip active" data-contact="joao">João</button>
+                <button class="chat-contact-chip" data-contact="maria">Maria</button>
+                <button class="chat-contact-chip" data-contact="carlos">Carlos</button>
+            </div>
+
+            <div class="chat-messages" id="chatMessages"></div>
+
+            <form class="chat-input-row" id="chatForm">
+                <input type="text" id="chatInput" placeholder="Escreva uma mensagem...">
+                <button type="submit"><i class="fas fa-paper-plane"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
